@@ -3,3 +3,4 @@
 .htaccess
 404.html
 vendor/
+composer.lock
