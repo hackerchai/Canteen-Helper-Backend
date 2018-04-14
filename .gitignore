@@ -1,1 +1,4 @@
 .idea/
+.well-known/
+.htaccess
+404.html
