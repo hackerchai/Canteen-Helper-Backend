@@ -15,7 +15,7 @@ return [
     // +----------------------------------------------------------------------
 
     // 应用调试模式
-    'app_debug'              => false,
+    'app_debug'              => true,
     // 应用Trace
     'app_trace'              => false,
     // 应用模式状态
@@ -29,7 +29,7 @@ return [
     // 扩展函数文件
     'extra_file_list'        => [THINK_PATH . 'helper' . EXT],
     // 默认输出类型
-    'default_return_type'    => 'html',
+    'default_return_type'    => 'json',
     // 默认AJAX 数据返回格式,可选json xml ...
     'default_ajax_return'    => 'json',
     // 默认JSONP格式返回的处理方法
@@ -156,7 +156,7 @@ return [
     // 显示错误信息
     'show_error_msg'         => false,
     // 异常处理handle类 留空使用 \think\exception\Handle
-    'exception_handle'       => '',
+    'exception_handle'       => '\app\lib\exception\ExceptionHandle',
 
     // +----------------------------------------------------------------------
     // | 日志设置
@@ -236,4 +236,23 @@ return [
         'var_page'  => 'page',
         'list_rows' => 15,
     ],
+    //微信配置
+    'wx_canteen_helper' => [
+        'appId' =>'wx051a2b5a31d2c1bc',
+        'appSecret' =>"43d7237c796fa78c55369f6ca2395ab7",
+        'loginUrl' => "https://api.weixin.qq.com/sns/".
+        "jscode2session?appid=%s&secret=%s&js_code=%s".
+        "&grant_type=authorization_code"
+    
+    ],
+    "wx_canteen_admin" =>[
+        'appId' =>'wx051a2b5a31d2c1bc',
+        'appSecret' =>"43d7237c796fa78c55369f6ca2395ab7",
+        'loginUrl' => "https://api.weixin.qq.com/sns/".
+        "jscode2session?appid=%s&secret=%s&js_code=%s".
+        "&grant_type=authorization_code"
+    ],
+    //token加密盐
+    'token_salt' =>'dssfgdretgg',
+    'token_expire_in' => 0,
 ];
