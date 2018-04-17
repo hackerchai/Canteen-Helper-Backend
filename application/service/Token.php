@@ -1,6 +1,10 @@
 <?php
 namespace app\service;
-
+use app\lib\exception\WeChatException;
+use Exception;
+use app\student\model\User;
+use app\lib\exception\TokenException;
+use think\Db;
 class Token{
     protected $code;
     protected $appId;
@@ -42,6 +46,10 @@ class Token{
     public function get(){
         $result=curl_get($this->loginUrl);     
         $wxResult=json_decode($result,true);
+        $data=[
+            "error_code" => 200,
+            "error_msg" => "success"
+        ];
         $token='';
         if(empty($wxResult))
         {
@@ -53,10 +61,10 @@ class Token{
                 $this->processLoginError($wxResult);
 
             }else{
-               $token=$this->grantToken($wxResult);
+               $data['data']['token']=$this->grantToken($wxResult);
             }
         }
-        return $token;
+        return $data;
     }
     /**
      * 准备缓存数据
@@ -76,9 +84,9 @@ class Token{
      */
     protected function grantToken($wxResult){
         $openId=$wxResult['openid'];
-        $user=db($this->name)->where("open_id","=",$openId)->find();
+        $user=Db::name($this->name)->where("open_id","=",$openId)->find();
         if($user){
-            $uid=$user->id;
+            $uid=$user['id'];
         }else{
             $uid=db($this->name)->insertGetId([
                 "open_id" => $openId
