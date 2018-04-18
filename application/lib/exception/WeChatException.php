@@ -6,7 +6,6 @@ namespace app\lib\exception;
  */
 class WeChatException extends BaseException
 {
-    public $code = 404;
-    public $msg = '生成令牌错误';
-    public $errorCode = 10001;
+    public $msg = 'code无效';
+    public $errorCode = 404;
 }

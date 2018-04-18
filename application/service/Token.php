@@ -46,10 +46,6 @@ class Token{
     public function get(){
         $result=curl_get($this->loginUrl);     
         $wxResult=json_decode($result,true);
-        $data=[
-            "error_code" => 200,
-            "error_msg" => "success"
-        ];
         $token='';
         if(empty($wxResult))
         {
@@ -61,10 +57,10 @@ class Token{
                 $this->processLoginError($wxResult);
 
             }else{
-               $data['data']['token']=$this->grantToken($wxResult);
+               $token=$this->grantToken($wxResult);
             }
         }
-        return $data;
+        return $token;
     }
     /**
      * 准备缓存数据
@@ -94,6 +90,7 @@ class Token{
         }
         $cachedValue=$this->prepareCachedValue($wxResult,$uid);
         $token=$this->saveToCache($cachedValue);
+        db($this->name)->where('id',"=",$uid)->update(["token" => $token]);
         return $token;
     }
     protected function saveToCache($cachedValue){
@@ -111,10 +108,7 @@ class Token{
     }
   
     protected function processLoginError($wxResult){
-        throw new WeChatException([
-            "msg" => $wxResult['errmsg'],
-            "errorCode" => $wxResult ['errcode']
-        ]);
+        throw new WeChatException();
     }
    
 }

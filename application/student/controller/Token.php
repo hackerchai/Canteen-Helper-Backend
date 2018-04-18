@@ -8,7 +8,6 @@ class Token {
         (new CodeValidate())->goCheck();
         $ut=new Toke($code,"user",'wx_canteen_helper');
         $token=$ut->get();
-        return $token;
-       
+        return $token;   
     }
 }

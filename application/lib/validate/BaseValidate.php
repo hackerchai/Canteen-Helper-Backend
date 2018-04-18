@@ -3,6 +3,7 @@ namespace app\lib\validate;
 use think\Validate;
 use think\Request;
 use app\lib\exception\ParamerException;
+use think\Cache;
 class BaseValidate extends Validate
 {
 
@@ -32,7 +33,12 @@ class BaseValidate extends Validate
      */
     public function goCheck(){
         $request=Request::instance();
-        $param=$request->param();
+        $param=$request->param();    
+        $header=$request->header(); 
+        if(array_key_exists("token",$header))
+        {    
+        $param['token']=$header['token'];
+        }
         if(!$this->check($param))
         {
             $e=new ParamerException(
@@ -86,6 +92,19 @@ class BaseValidate extends Validate
         if(!empty($value))
         {
             return true;
+        }else{
+            return $field.'不能为空';
+        }
+    }
+    protected function isExistToken($value,$rule='',$data='',$field=''){
+        if(!empty($value))
+        {
+           $value=Cache::get($value);
+           if(!empty($value)){
+               return true;
+           }else{
+               return $field."不存在或已经过期";
+           }
         }else{
             return $field.'不能为空';
         }
