@@ -43,7 +43,6 @@ CREATE TABLE `ch_address` (
 --
 -- 表的结构 `ch_admin`
 --
-drop table if exists ch_admin;
 CREATE TABLE `ch_admin` (
   `id` int(11) NOT NULL,
   `username` varchar(20) NOT NULL,
@@ -55,7 +54,6 @@ CREATE TABLE `ch_admin` (
 --
 -- 表的结构 `ch_menu`
 --
-drop table exists ch_menu;
 CREATE TABLE `ch_menu` (
   `id` int(11) NOT NULL,
   `meal_name` varchar(50) NOT NULL,
@@ -71,7 +69,6 @@ CREATE TABLE `ch_menu` (
 --
 -- 表的结构 `ch_merchant`
 --
-drop table exists ch_merchant;
 CREATE TABLE `ch_merchant` (
   `id` int(11) NOT NULL,
   `merchant_name` varchar(50) NOT NULL,
@@ -90,7 +87,6 @@ CREATE TABLE `ch_merchant` (
 --
 -- 表的结构 `ch_merchant_member`
 --
-drop table exists ch_merchant_member;
 CREATE TABLE `ch_merchant_member` (
   `id` int(11) NOT NULL,
   `open_id` varchar(50) NOT NULL,
