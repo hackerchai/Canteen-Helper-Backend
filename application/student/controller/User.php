@@ -7,6 +7,7 @@ use app\lib\validate\Token;
 use app\lib\validate\PhoneValidate;
 use app\student\model\Address;
 use app\lib\validate\AddressValidate;
+use app\lib\sms\Sms;
 class User extends BaseController{
     public function login(){
         $cv=new CodeValidate();
@@ -26,6 +27,9 @@ class User extends BaseController{
     public function smsCode(){
         $pv=new PhoneValidate();
         $param=$pv->goCheck();
+        $sms=new Sms();
+        $res=$sms->sendSms("17725029601");
+        return $this->succeed($res);
 
     }
     public function addresList(){

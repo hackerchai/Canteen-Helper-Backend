@@ -4,6 +4,8 @@ use think\Validate;
 use think\Request;
 use app\lib\exception\ParamerException;
 use think\Cache;
+use app\lib\exception\TokenException;
+use app\lib\validate\Token;
 class BaseValidate extends Validate
 {
 
@@ -38,6 +40,11 @@ class BaseValidate extends Validate
         if(array_key_exists("token",$header))
         {    
         $param['token']=$header['token'];
+        $flag=(new Token())->check($header);
+        if(!$flag)
+        {
+            throw new TokenException();
+        }
         }
         if(!$this->check($param))
         {

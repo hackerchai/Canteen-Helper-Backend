@@ -2,6 +2,6 @@
 namespace app\lib\validate;
 class CodeValidate extends BaseValidate{
     protected $rule=[
-        ["code" , "require|isNotEmpty","请求为空|请求为空"]
+        ["code" , "require|isNotEmpty","code请求为空|code请求为空"]
     ];
 }

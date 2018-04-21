@@ -25,7 +25,12 @@ return [
     // 入口自动绑定模块
     'auto_bind_module'       => false,
     // 注册的根命名空间
-    'root_namespace'         => [],
+    'root_namespace'         => ["Endroid\QrCode"=>ROOT_PATH."extend/endroid/qrcode/src",
+                                 "MyCLabs\Enum" =>ROOT_PATH."extend/php-enum/src",
+                                 "BaconQrCode" =>ROOT_PATH."extend/BaconQrCode/src/BaconQrCode",
+                                 "Qcloud\Sms" =>ROOT_PATH."extend/qcloudsms/src",
+                                 "Aliyun"     =>ROOT_PATH."extend/aliyunsms/api_sdk/lib",
+                                 ],
     // 扩展函数文件
     'extra_file_list'        => [THINK_PATH . 'helper' . EXT],
     // 默认输出类型

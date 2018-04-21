@@ -5,6 +5,7 @@ use think\Log;
 use think\Request;
 use Exception;
 use think\View;
+use think\Config;
 class ExceptionHandle extends Handle{
     private $code;
     private $msg;
@@ -18,7 +19,7 @@ class ExceptionHandle extends Handle{
         }
         else{
               // 如果是服务器未处理的异常，将http状态码设置为500，并记录日志
-              if(config('app_debug')){
+              if(Config::get('app_debug')){
                 // 调试状态下需要显示TP默认的异常页面，因为TP的默认页面
                 // 很容易看出问题
                 return parent::render($e);

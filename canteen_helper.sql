@@ -59,7 +59,7 @@ drop table exists ch_menu;
 CREATE TABLE `ch_menu` (
   `id` int(11) NOT NULL,
   `meal_name` varchar(50) NOT NULL,
-  `meal_price` decimal(2,2) NOT NULL,
+  `meal_price` decimal(5,2) NOT NULL,
   `sales_count` int(11) NOT NULL,
   `merchant_id` int(11) NOT NULL,
   `is_sold_out` tinyint(1) NOT NULL,
@@ -145,7 +145,7 @@ CREATE TABLE `ch_student` (
   `stu_id` varchar(15) NOT NULL,
   `stu_pass` varchar(50) NOT NULL,
   `phone` varchar(15) NOT NULL,
-  `deposit` decimal(2,2) NOT NULL,
+  `deposit` decimal(5,2) NOT NULL,
   `reg_date` datetime NOT NULL,
   `is_deliver` tinyint(1) NOT NULL,
   `is _available` tinyint(1) NOT NULL,

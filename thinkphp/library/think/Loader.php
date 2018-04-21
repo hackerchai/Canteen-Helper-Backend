@@ -191,8 +191,9 @@ class Loader
         } else {
             self::addPsr4($namespace . '\\', rtrim($path, DS), true);
         }
+        
     }
-
+  
     /**
      * 添加 PSR-0 命名空间
      * @access private
@@ -235,7 +236,7 @@ class Loader
             self::$fallbackDirsPsr4 = $prepend ?
             array_merge((array) $paths, self::$fallbackDirsPsr4) :
             array_merge(self::$fallbackDirsPsr4, (array) $paths);
-
+           
         } elseif (!isset(self::$prefixDirsPsr4[$prefix])) {
             // Register directories for a new namespace.
             $length = strlen($prefix);
@@ -271,6 +272,7 @@ class Loader
         } else {
             self::$namespaceAlias[$namespace] = $original;
         }
+       
     }
 
     /**
