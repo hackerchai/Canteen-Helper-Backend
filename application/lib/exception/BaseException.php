@@ -25,4 +25,11 @@ class BaseException extends Exception{
             $this->errorCode = $params['errorCode'];
         }
     }
+    public function show(){
+        header("Content-type: text/html; charset=utf-8");
+        echo '<script>alert('.'\''.$this->msg.'\''.');
+        window.location.href=document.referrer;
+        </script>';
+        die;
+    }
 }

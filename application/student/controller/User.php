@@ -28,7 +28,7 @@ class User extends BaseController{
         $pv=new PhoneValidate();
         $param=$pv->goCheck();
         $sms=new Sms();
-        $res=$sms->sendSms("17725029601");
+        $res=$sms->sendSms($param["phone"]);
         return $this->succeed($res);
 
     }

@@ -48,3 +48,16 @@ function getRandChar($length){
     
         return $str;
 }
+function getAddressByStr($str){
+    $str=$str."";
+    $l=strlen("$str");
+    if($l<5)
+    {
+        return;
+    }
+    $address=config("address");
+    $garden=$address['garden'];
+    $building=$address['building'];
+    $address=$garden[$str[0]].$building[$str[1]].substr($str,2);
+    return $address;
+}

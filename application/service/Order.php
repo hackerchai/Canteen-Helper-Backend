@@ -132,7 +132,7 @@ class Order{
         $num=getRandNum(4);
         return $time.$num;
     }
-    private function getAddressByStr($str){
+    public function getAddressByStr($str){
         $str=$str."";
         $l=strlen("$str");
         if($l<5)

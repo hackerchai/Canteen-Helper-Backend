@@ -9,7 +9,16 @@ use app\lib\validate\Token;
 class BaseValidate extends Validate
 {
 
-
+  
+    /**
+     * 
+     */
+    public function checkData(){
+        $request=Request::instance();
+        $param=$request->param();
+        $this->check_data($param); 
+        return $param;
+    }
     /**
      * 验证一般的数据
      * @param array $data 须验证的数据
@@ -24,8 +33,7 @@ class BaseValidate extends Validate
                     ';', $this->error) : $this->error,
             ]
            );
-           throw $e;
-
+        $e->show();
        }
     }
     /**

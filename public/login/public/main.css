@@ -1,0 +1,25 @@
+#login, #forget {
+    width: 100%;
+}
+
+.container-fluid {
+    background: #1abc9c;
+    margin: 0 !important;
+    height: 100vh;
+}
+
+.jumbotron {
+    height: 100vh;
+}
+
+.login_form {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+}
+
+/* #forget {
+    display: none;
+} */

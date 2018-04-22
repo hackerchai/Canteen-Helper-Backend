@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8"></meta>
+
+    <title>登录-AI_OJ</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"></meta>
+
+    <!-- Loading Bootstrap -->
+
+    <link href="__ROOT__/public/login/public/flatui/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet"></link>
+
+    <link href="__ROOT__/public/login/public/main.css" rel="stylesheet"></link>
+
+    <!-- Loading Flat UI -->
+
+    <link href="__ROOT__/public/login/public/flatui/css/flat-ui.css" rel="stylesheet"></link>
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!-- [if lt IE 9]>
+      <script src="__ROOT__/public/login/public/flatui/js/vendor/html5shiv.js"></script>
+      <script src="__ROOT__/public/login/public/flatui/js/vendor/respond.min.js"></script>
+    <![endif] -->
+</head>
+
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-md-offset-4 col-sm-6 col-sm-offset-3 col-xm-6 col-xm-offset-3 login_form">
+                <form id="login" class="login-form" method="POST" action="__ROOT__/index.php/admin/login/forget">
+                    <h4>忘记密码</h4>
+                    <div class="form-group">
+                        <input name="password" type="password" class="form-control login-field" value="" placeholder="新密码必须在6到16位" id="login-pass"></input>
+                        <label class="login-field-icon fui-lock" for="login-pass"></label>
+                    </div>    
+                    <input type='hidden' name='email' value="{$email}" />
+                    <div class="form-group">
+                        <input name="againPassword" type="password" class="form-control login-field" value="" placeholder="请再次填写" id="login-pass"></input>
+
+                        <label class="login-field-icon fui-lock" for="login-pass"></label>
+                    </div>                 
+                    <div id="form-btn" class="text-right btn-group" style="width:100%;">
+                        <input class="btn btn-primary btn-lg login-btn" type="submit" name="login" value="确定修改" style="width:100%;"></input>     
+                    </div>
+                   
+                </form>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- /.container -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="__ROOT__/public/login/public/flatui/js/vendor/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="__ROOT__/public/login/public/flatui/js/vendor/video.js"></script>
+    <script src="__ROOT__/public/login/public/flatui/js/flat-ui.min.js"></script>
+   
+</body>
+
+</html>
