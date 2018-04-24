@@ -8,7 +8,23 @@ use app\lib\validate\PhoneValidate;
 use app\student\model\Address;
 use app\lib\validate\AddressValidate;
 use app\lib\sms\Sms;
+use app\student\model\Student;
+use app\lib\validate\RegisterValidate;
 class User extends BaseController{
+    public function auth(){
+        $re=new RegisterValidate();
+        $params=$re->goCheck();
+        $value=$this->getValue($params['token']);
+        $openId=$value['openid'];
+        $student=Student::where("open_id","=",$openId);
+        $data["stu_id"]=$params['stu_id'];
+        $data["stu_pass"]=$params['stu_pass'];
+        $data["phone"]=$params['phone'];
+        $student->update($data);
+        return $this->succeed([
+            "msg" =>$value['uid'],
+        ]);
+    }
     public function login(){
         $cv=new CodeValidate();
         $param=$cv->goCheck();
@@ -22,7 +38,8 @@ class User extends BaseController{
     }
     public function identity(){
         $token=new Token();
-       return $token->goCheck();
+        $token->goCheck();
+       return $this->succeed(["msg" => true]);
     }
     public function smsCode(){
         $pv=new PhoneValidate();

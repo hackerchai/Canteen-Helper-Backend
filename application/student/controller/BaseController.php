@@ -22,4 +22,10 @@ class BaseController extends Controller{
         $id=$v['uid'];
         return $id;
     }
+    protected function getValue($token){
+        $v=Cache::get($token);
+        $v=json_decode($v,true);
+      
+        return $v;
+    }
 }
