@@ -49,6 +49,7 @@ class Order{
             $stutas++;
             $order->save(["status" =>$stutas ]);
             return ["msg" => 1];
+            
         }else{
             throw new OrderException([
                 "msg" => "订单号不存在",

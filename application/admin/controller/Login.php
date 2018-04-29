@@ -35,7 +35,7 @@ class Login extends BaseController{
       }
       $user=$user->toArray();
       Session::set('id',$user['id']);
-      return $this->redirect('index/login');
+      return $this->redirect('index\login');
     }
     public function forget(){
       if(empty($_POST['login']))

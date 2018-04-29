@@ -22,7 +22,7 @@ class Menu extends BaseModel{
         }else{
             $menu=$this->getMenuById($goods);
             if($menu){
-                $this->addSale($good);
+                $this->addSale($goods);
                 $menus=$menu;
             }
             

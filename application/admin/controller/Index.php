@@ -14,12 +14,12 @@ class Index  extends BaseController
     ];
     public function index()
     {
-        return $this->fetch('login\index');
+        return $this->fetch('login/index');
      
     }
     public function login()
     {
-        return $this->fetch('index\index');
+        return $this->fetch('index/index');
     }
     public function test(){
         //$factroy=Factory::getFactory();

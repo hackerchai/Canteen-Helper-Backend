@@ -17,9 +17,13 @@ return [
     // 数据库名
     'database'        => 'canteen',
     // 用户名
-    'username'        => 'root',
+    'username'        => 'canteen',
     // 密码
+<<<<<<< Updated upstream
     'password'        => 'lzx2000228',
+=======
+    'password'        => 'canteen@sqladmin',
+>>>>>>> Stashed changes
     // 端口
     'hostport'        => '',
     // 连接dsn
