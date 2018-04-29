@@ -19,12 +19,8 @@ return [
     // 用户名
     'username'        => 'canteen',
     // 密码
-<<<<<<< Updated upstream
-    'password'        => 'lzx2000228',
-=======
     'password'        => 'canteen@sqladmin',
->>>>>>> Stashed changes
-    // 端口
+    // port
     'hostport'        => '',
     // 连接dsn
     'dsn'             => '',
