@@ -8,6 +8,7 @@
 namespace app\business\controller;
 use app\business\model\BaseModel;
 use app\lib\validate\CodeValidate;
+use app\business\controller\BaseController;
 use app\lib\validate\LoginValidate;
 use app\service\Token as Toke;
 use app\lib\success\Success;
@@ -16,10 +17,10 @@ use app\lib\validate\PhoneValidate;
 use app\student\model\Address;
 use app\lib\validate\AddressValidate;
 use app\lib\sms\Sms;
-use app\business\model\Merchant;
+use app\business\model\MerchantMember;
 use app\lib\validate\RegisterValidate;
 
-class Member extends BaseModel
+class Member extends BaseController
 {
 
     public function login()
@@ -41,13 +42,15 @@ class Member extends BaseModel
         $params=$rv->goCheck();
         $value=$this->getValue($params['token']);
         $openId=$value['openid'];
-        $merchant=Merchant::where("open_id","=",$openId);
+        $merchant=MerchantMember::where("open_id","=",$openId);
         $data["phone"]=$params['phone'];
         $merchant->update($data);
         return $this->succeed([
             "msg" =>$value['uid'],
         ]);
     }
+
+
 
 
 }
