@@ -7,6 +7,6 @@ class AddressValidate extends BaseValidate{
         ["building","require|length:1"],
         ["room","require|length:3"],
         ["phone","require|length:6,15"],
-        ["user_name","require"],
+        ["name","require"],
     ];
 }

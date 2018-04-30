@@ -6,7 +6,6 @@ class Date{
         self::$time=date("Y-m-d",time());
         $fileDir=$root.self::$time;
         $fileDir = iconv("UTF-8", "GBK", $fileDir);
-        var_dump($fileDir);
         if(!file_exists($fileDir)){
             mkdir($fileDir,"0777",true);
         }

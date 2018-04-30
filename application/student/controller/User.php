@@ -10,6 +10,9 @@ use app\lib\validate\AddressValidate;
 use app\lib\sms\Sms;
 use app\student\model\Student;
 use app\lib\validate\RegisterValidate;
+use app\student\model\Cart;
+use app\lib\jwc\Jwc;
+use app\lib\exception\DefualtAddress;
 class User extends BaseController{
     public function auth(){
         $re=new RegisterValidate();
@@ -36,10 +39,18 @@ class User extends BaseController{
             "token" => $token
         ]);   
     }
+    public function jwcIdentify(){
+        $uid=$this->getId();
+        $jwc=new Jwc(input("param."));
+        $name=$jwc->getName();
+        Student::where("id",$uid)->update(["name" => $name]);
+        return $this->succeed(["msg" => true]);
+    }
+
     public function identity(){
-        $token=new Token();
-        $token->goCheck();
-       return $this->succeed(["msg" => true]);
+        $this->getToken();
+        return $this->succeed(["msg" => true]);
+       
     }
     public function smsCode(){
         $pv=new PhoneValidate();
@@ -49,7 +60,7 @@ class User extends BaseController{
         return $this->succeed($res);
 
     }
-    public function addresList(){
+    public function addressList(){
         $id=$this->getId();
         $address=new Address();
         return $this->succeed($address->getAddressByUid($id));
@@ -63,9 +74,108 @@ class User extends BaseController{
             $addr=new Address($param);
             $addr->allowField(true)->save();
         }else{
+            $ad=Address::where("uid",$uid)->find();
+            if(empty($ad)){
+                $param['choose']=1;
+            }
             $addr=new Address();
             $addr->allowField(true)->save($param,["id"=>$param["id"]]);
         }
         return $this->succeed(['msg' => "1"]);
     }
+    public function cartList(){
+        $id=$this->getId();
+        $data=[];
+        $carts=Cart::with(['menu',"buy"])->where("buyId","=",$id)->where("nums",">",0)->where("status",0)->select();
+        if(!empty($carts)){
+            foreach($carts as $cart){
+                array_push($data,$cart->toArray());
+            }
+        }
+        return $this->succeed($data);
+    }
+    public function addAMenuToCart(){
+        $id=$this->getId();
+        $menuId=input("param.menuId");
+        $mune=Cart::where("menuId",$menuId)->where("buyId",$id)->where("nums",">",0)->where("status",0)->find();
+        if(!empty($mune)){
+            $num=$mune->nums;
+            $num++;
+            $cartId=$mune->id;
+            Cart::where("id",$cartId)->update(["nums" => $num]);
+        }else{
+            Cart::create([
+                "buyId" =>$id,
+                "menuId" =>$menuId,
+                "nums" => 1,
+            ]);
+         }
+         return $this->succeed([
+             "msg" =>true
+         ]);
+    }
+    public function changeFlag(){
+        $uid=$this->getId();
+        $cartId=input("param.cartId");
+        if(!empty($cartId)){
+        $cart=Cart::where("id",$cartId)->find();
+        if($cart->flag){
+            Cart::where("id",$cartId)->update(['flag' => 0]);
+        }else{
+            Cart::where("id",$cartId)->update(['flag' => 1]);
+        }
+      
+        }else{
+            $munes=Cart::where("buyId",$uid)->where("nums",">",0)->where("status",0)->select();
+            if(!empty($munes)){
+                foreach($munes as $mune){
+                    $id=$mune->id;
+                    Cart::where("id",$id)->update(['flag'=>1]);
+                }
+            }
+            
+        }
+        return $this->succeed([
+            "msg" =>true
+        ]);
+    }
+    public function removeMenuFromCart(){
+        $id=$this->getId();
+        $menuId=input("param.menuId");
+        $mune=Cart::where("menuId",$menuId)->where("buyId",$id)->where("nums",">",0)->where("status",0)->find();
+        if(!empty($mune)){
+            $num=$mune->nums;
+            $num-=1;
+            $cartId=$mune->id;
+            Cart::where("id",$cartId)->update(["nums" => $num]);
+        }
+        return $this->succeed([
+            "msg" =>true
+        ]);
+    }
+    public function defaultAddress(){
+        $uid=$this->getId();
+        $address=Address::where("uid",$uid)->where("choose",1)->find();
+        if(!empty($address)){
+            return $this->succeed($address->toArray());
+        }else{
+            throw new DefualtAddress();
+        
+        }
+    }
+    public function updateDefualAddress(){
+        $uid=$this->getId();
+
+        $addressId=input("param.id");
+        $address=Address::where("uid",$uid)->where("choose",1)->find();
+        if(!empty($address)){
+           Address::where("id",$address->id)->update(['choose'=>0]);
+           Address::where("id",$addressId)->update(['choose'=>1]);
+           return $this->succeed(['msg'=>true]);
+        }else{
+            throw new DefualtAddress();
+        }
+    }
+    
+
 }

@@ -15,12 +15,12 @@ return [
     // 服务器地址
     'hostname'        => '127.0.0.1',
     // 数据库名
-    'database'        => 'canteen',
+    'database'        => 'canteen_helper',
     // 用户名
-    'username'        => 'canteen',
+    'username'        => 'root',
     // 密码
-    'password'        => 'canteen@sqladmin',
-    // port
+    'password'        => 'root',
+    // 端口
     'hostport'        => '',
     // 连接dsn
     'dsn'             => '',

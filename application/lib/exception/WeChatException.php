@@ -7,5 +7,5 @@ namespace app\lib\exception;
 class WeChatException extends BaseException
 {
     public $msg = 'code无效';
-    public $errorCode = 404;
+    public $errorCode = 300;
 }

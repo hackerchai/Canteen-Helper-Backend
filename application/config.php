@@ -243,16 +243,16 @@ return [
     ],
     //微信配置
     'wx_canteen_helper' => [
-        'appId' =>'wx1b7f5cd400712300',
-        'appSecret' =>"bcf0f58b91897fe16e1fa156a8cffaaf",
+        'appId' =>'wxe45caf54f3997402',
+        'appSecret' =>"7a3d1e0b4da2f976f4c6880fe9cfe572",
         'loginUrl' => "https://api.weixin.qq.com/sns/".
         "jscode2session?appid=%s&secret=%s&js_code=%s".
         "&grant_type=authorization_code"
     
     ],
     "wx_canteen_admin" =>[
-        'appId' =>'wx051a2b5a31d2c1bc',
-        'appSecret' =>"43d7237c796fa78c55369f6ca2395ab7",
+        'appId' =>'wx1b7f5cd400712300',
+        'appSecret' =>"bcf0f58b91897fe16e1fa156a8cffaaf",
         'loginUrl' => "https://api.weixin.qq.com/sns/".
         "jscode2session?appid=%s&secret=%s&js_code=%s".
         "&grant_type=authorization_code"

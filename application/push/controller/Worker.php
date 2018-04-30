@@ -4,8 +4,6 @@ namespace app\push\controller;
 
 use think\worker\Server;
 
-use think\Db;
-
 class Worker extends Server{
 
     protected $socket = 'websocket://127.0.0.1:2346';
@@ -17,45 +15,9 @@ class Worker extends Server{
      * @param $connection
      * @param $data
      */
-    public function onMessage($connection, $data){
-        $msgData = json_decode($data,true);
-        if(!isset($connection->isAuthed)){
-        	if(!isset($msgData["token"])){
-        		$connection->send('{"error":"bad auth"}');
-        		return false;
-        	}
-        	$menchantUser = Db::name("merchant_member")->where("token",$msgData["token"])->find();
-        	if(empty($menchantUser)){
-        		$connection->send('{"error":"bad auth,user not found"}');
-        		return false;
-        	}
-        	$connection->uid = $menchantUser["id"];
-        	$connection->merchantId = $menchantUser["merchant_id"];
-        	$this->midList[$connection->merchantId] = $connection;
-        	$connection->isAuthed = true;
-            $this->sendUncomplete($connection);
-        }
-    }
-
-    private function sendUncomplete($connection){
-        $unConfirmed = Db::name("order")->where("merchant_id",$connection->merchantId)->where("status",3)->where("is_pushed",0)->select();
-        $unfinishedOrder = Db::name("order")->where("merchant_id",$connection->merchantId)->where("status",4)->select();
-        $dishInfoList=[];
-        $dishArray = $unConfirmed+$unfinishedOrder;
-        foreach ($dishArray as $key => $value) {
-            $dishList = explode(",", $value["goods"]);
-            foreach ($dishList as $dishKey => $dishId) {
-                if(!array_key_exists($dishId, $dishInfoList)){
-                    $dishInfoList[$dishId] = Db::name("menu")->where("id",$dishId)->find();
-                }
-            }
-        }
-        $returnJson = [
-            "unFinished" => $unfinishedOrder,
-            "unConfirmed" => $unConfirmed,
-            "dishList" => $dishInfoList,
-        ];
-        $connection->send(json_encode($returnJson));
+    public function onMessage($connection, $data)
+    {
+        $connection->send('我收到你的信息了'.$connection->uid);
     }
 
     /**

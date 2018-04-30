@@ -20,8 +20,20 @@ function curl_get($url){
     curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
     $file_contents = curl_exec($ch);
     $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
     curl_close($ch);
     return $file_contents;
+}
+function curl_post($url,$data){
+        $data=json($data);
+        $curl=curl_init();
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($curl, CURLOPT_HEADER, false);
+        $res = curl_exec($curl);
+        curl_close($curl);
+        print_r($res);
+        return $res;
 }
 function getRandChar($length){
     $str=null;

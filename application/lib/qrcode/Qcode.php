@@ -6,6 +6,11 @@ use Endroid\QrCode\QrCode;
 class Qcode{
     private static $name;
     private static $label;
+    /**
+     * 二维码生成函数
+     * @param string $text 一段字符串
+     * @return string 文件绝对路径,
+     */
     public static function png($text){
         $root=config("qr.root");
         $fileRoot=$root.config("qr.fileRoot");
@@ -24,9 +29,13 @@ class Qcode{
         fclose($file);
         return $filename;
     }
+    /**
+     * 得到生成二维码的名字
+     */
     public static function getName(){
            return self::$name;
     }
+    //得到二维码的相对路径
     public static function getRelativeName(){
         return Date::getTime().DS.self::$name;
     }

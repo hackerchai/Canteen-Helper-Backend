@@ -26,6 +26,11 @@ class Token{
         $this->secert=$wx['appSecret'];     
         $this->loginUrl=sprintf($wx['loginUrl'],$this->appId,$this->secert,$this->code);
     }
+    
+    public static function getVarByToken($key){
+
+
+    }
     /**
      * 生成令牌
      */
