@@ -5,7 +5,7 @@
  * Date: 18-4-29
  * Time: 下午11:40
  **/
-namespace app\business\controller;
+namespace app\merchant\controller;
 use app\business\model\BaseModel;
 use app\lib\validate\CodeValidate;
 use app\business\controller\BaseController;
