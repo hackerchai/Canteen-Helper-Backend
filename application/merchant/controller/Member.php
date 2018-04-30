@@ -6,9 +6,9 @@
  * Time: 下午11:40
  **/
 namespace app\merchant\controller;
-use app\business\model\BaseModel;
+use app\merchant\model\BaseModel;
 use app\lib\validate\CodeValidate;
-use app\business\controller\BaseController;
+use app\merchant\controller\BaseController;
 use app\lib\validate\LoginValidate;
 use app\service\Token as Toke;
 use app\lib\success\Success;
@@ -17,7 +17,7 @@ use app\lib\validate\PhoneValidate;
 use app\student\model\Address;
 use app\lib\validate\AddressValidate;
 use app\lib\sms\Sms;
-use app\business\model\MerchantMember;
+use app\merchant\model\MerchantMember;
 use app\lib\validate\RegisterValidate;
 
 class Member extends BaseController
@@ -50,8 +50,14 @@ class Member extends BaseController
         ]);
     }
 
+    public function smsCode()
+    {
+        $pv=new PhoneValidate();
+        $param=$pv->goCheck();
+        $sms=new Sms();
+        $res=$sms->sendSms($param["phone"]);
+        return $this->succeed($res);
 
-
-
+    }
 }
 
