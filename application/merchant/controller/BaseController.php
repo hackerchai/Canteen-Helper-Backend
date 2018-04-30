@@ -1,6 +1,9 @@
 <?php
 namespace app\merchant\controller;
 use think\Controller;
+use app\lib\validate\Token;
+use think\Cache;
+use app\lib\success\Success;
 class BaseController extends Controller{
     protected function succeed($data){
         $se=new Success();

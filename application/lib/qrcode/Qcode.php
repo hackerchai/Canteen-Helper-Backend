@@ -20,7 +20,7 @@ class Qcode{
         $qrcode=new QrCode();
         $qrcode->setText($text);
         $qrcode->setSize(300);
-        $qrcode->setLogoPath($logoPath);
+       // $qrcode->setLogoPath($logoPath);
         $qrcode->setLogoWidth(100);
         $pngData=$qrcode->writeString();
         $filename=$fileRoot.self::$name.".png";

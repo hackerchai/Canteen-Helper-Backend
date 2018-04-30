@@ -7,15 +7,27 @@ class Order extends BaseController{
     public function handle(){
         $token=$this->getToken();
         $num=input("param.order_num");
-        $num=input("param.is_accept");
+        $is_accept=input("param.is_accept");
         $order=OrderModel::where("order_num",$num)->find();
-        if($order->status==1){
-            $orderSe=new OrderService($token);
-            $orderSe->updatdOrderStatus($num);
+        if($order->status=="已提交"){
+            if($is_accept){
+                OrderModel::where("order_num",$num)->update(["status" => 4]);
+            }else{
+                OrderModel::where("order_num",$num)->update(["status" => 2]);
+            }
         }else{
             throw new SpoceException();
         }
         return $this->succeed(['msg' => 1]);
+    }
+    public function sum(){
+        $token=$this->getToken();
+        $uid=$this->getId();
+        $ordersc=new OrderModel();
+        $orders=$ordersc->findTodayOrder($uid);
+        $order=new OrderService($token);
+       $res= $order->analysisOrder($orders);
+        return $res;
     }
    
 }

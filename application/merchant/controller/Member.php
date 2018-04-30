@@ -35,7 +35,13 @@ class Member extends BaseController
             "token" => $token,
         ]);
     }
-
+    public function smsCode(){
+        $pv=new PhoneValidate();
+        $param=$pv->goCheck();
+        $sms=new Sms();
+        $res=$sms->sendSms($param["phone"]);
+        return $this->succeed($res);
+    }
     public function auth()
     {
         $rv=new RegisterValidate();

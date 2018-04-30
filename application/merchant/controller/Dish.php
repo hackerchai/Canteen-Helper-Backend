@@ -1,6 +1,7 @@
 <?php
 namespace app\merchant\controller;
 use app\student\model\Menu;
+use app\lib\exception\MenuNotExist;
 class Dish extends BaseController{
     public function list(){
         $uid=$this->getId();
@@ -23,18 +24,28 @@ class Dish extends BaseController{
                 return $this->succeed(["stutas" => 0]);
             } else {
                 Menu::where("id",$id)->update(["is_sold_out"=>1]);
-                return $this->secceed(['stutas' =>1]);
+                return $this->succeed(['stutas' =>1]);
             }
         }else{
-
+            throw new MenuNotExist();
         }
     }
     public function delete(){
         $this->getToken();
         $id=input("param.id");
-        $menu=Menu::where("id",$id)->find();
-        if(!empty($menu)){
-            Menu::get($id)->delete();
+        if(strpos($id,",")){
+            $ids=explode(",",$id);
+            foreach ($ids as $id) {
+                $menu=Menu::where("id",$id)->find();
+                if(!empty($menu)){
+                    Menu::get($id)->delete();
+                }
+            }
+        }else{
+            $menu=Menu::where("id",$id)->find();
+            if(!empty($menu)){
+                Menu::get($id)->delete();
+            }
         }
         return $this->succeed(['msg' =>1]);
     }
@@ -55,10 +66,10 @@ class Dish extends BaseController{
              throw new ImageException(["msg"=>$file->getError()]);
         }
         if(!empty($menu)){
-            Menu->get($id)->update($data);
-        }else(
+            Menu::get($id)->update($data);
+        }else{
            Menu::create($data);
-        )
+        }
         return $this->succeed(['msg' =>1]);
      
         

@@ -71,6 +71,9 @@ class Order{
             ]);
         }
     }
+    public function getOrderSum(){
+        
+    }
     /**
      * 创建订单二维码
      * @param string $text 字符串
@@ -97,12 +100,73 @@ class Order{
         $nums=$this->strToArray($this->nums,",");
         $menuModel=new Menu();
         $menus=$menuModel->findMenus($goods,$nums);
+        $menus=$menus[0];
         $sumMoney=0.00;
        for($i=0;$i<sizeof($menus);$i++){
            $sumMoney+=$menus[$i]["meal_price"]*$nums[$i];
          }
        
         return $sumMoney;
+    }
+    public function analysisOrder($orders){
+        $res=$this->analysisOrderByType($orders);
+        $data=[];
+       
+        foreach($res as $key =>$v){
+            $data[$key]=$this->analysisOrderByGoods($res[$key]);
+        }
+        return $data;
+    }
+    private function analysisOrderByGoods($datas){
+        $data=[];
+        for($i=0;$i<sizeof($datas);$i++){    
+            $d=$datas[$i];       
+            $goods= $d['goods'];
+            $nums=$d["nums"];
+            if(strpos($goods,",")){
+                $goods=explode(",",$goods);
+               // var_dump($goods);
+                $nums=explode(",",$nums);
+                foreach($goods as $key =>$good){
+                    if(array_key_exists($good,$data)){
+                    }else{
+                      $data[$good]=[];
+                      array_push($data[$good],$nums[$key]);
+                    }
+                }
+            }else{
+                if(array_key_exists($goods,$data)){
+                    array_push($data[$goods],$nums);
+                }else{
+                    $data[$goods]=[];
+                  array_push($data[$goods],$nums);
+                }
+            }
+        }
+        foreach($data as $key => $d){
+            $sum=0;
+          foreach($d as $v){
+              $sum+=$v;
+          }
+          $data[$key]=$sum;
+        }
+        return $data;
+
+    }
+    private function analysisOrderByType($orders){
+        $data=[];
+        foreach($orders as $order){
+           $order_type=$order['order_type'];
+           if(array_key_exists($order_type,$data)){
+            array_push($data[$order_type],$order);
+           }else{
+            $data[$order_type]=[];
+            array_push($data[$order_type],$order);
+           }
+         
+        }
+        return $data;
+
     }
     /**
      * 得到订单通过购买者的id
@@ -135,14 +199,16 @@ class Order{
         $data=[];
         $goods=$this->strToArray($order['goods'],",");
         $nums=$this->strToArray($order['nums'],",");
-        $menus=(new Menu())->findMenus($goods,$nums,"id,meal_name,meal_price,picture");
+        $menus=(new Menu())->findMenus($goods,$nums,"id,meal_name,meal_price,picture,merchant_id");
+        $merchant_id=$menus[1];
+        OrderModel::where("id",$order["id"])->update(["merchant_id" =>$merchant_id]);
         $data['id']=$order['id'];
         $address=$order['address'];
         $data['qrcode']=$order['qrcode'];
         $data["order"]=$order['student']['name'];
         $data['order_num']=$order["order_num"];
         $data['status']=$order['status'];
-        $data["goods"]=$menus;
+        $data["goods"]=$menus[0];
       //  $data['nums']=$order['nums'];
         if(!empty($address)){
             $address=$this->getAddressByStr($address);
