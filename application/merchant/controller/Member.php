@@ -8,7 +8,7 @@
 namespace app\merchant\controller;
 use app\business\model\BaseModel;
 use app\lib\validate\CodeValidate;
-use app\business\controller\BaseController;
+use app\merchant\controller\BaseController;
 use app\lib\validate\LoginValidate;
 use app\service\Token as Toke;
 use app\lib\success\Success;
@@ -17,7 +17,7 @@ use app\lib\validate\PhoneValidate;
 use app\student\model\Address;
 use app\lib\validate\AddressValidate;
 use app\lib\sms\Sms;
-use app\business\model\MerchantMember;
+use app\merchant\model\MerchantMember;
 use app\lib\validate\RegisterValidate;
 
 class Member extends BaseController
@@ -28,7 +28,7 @@ class Member extends BaseController
         $lv = new CodeValidate();
         $param = $lv->goCheck();
         $code = $param['code'];
-        $mt = new Toke($code,"merchant_member","wx_canteen_helper");
+        $mt = new Toke($code,"merchant_member","wx_canteen_admin");
         $success = new Success();
         $token = $mt->get();
         return $success->create([
