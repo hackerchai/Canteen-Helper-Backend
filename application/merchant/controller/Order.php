@@ -4,17 +4,12 @@ use app\student\model\Order as OrderModel;
 class Order extends BaseController
 {
 
-    public function handle(){
-        $token=$this->getToken();
-        $num=input("param.order_num");
-        $order=OrderModel::where("order_num",$num)->find();
-        if($order->status==1){
-            $orderSe=new OrderService($token);
-            $orderSe->updatdOrderStatus($num);
-        }else{
-            throw new SpoceException();
-        }
-        return $this->succeed(['msg' => 1]);
+    public function today(){
+        $ov=new OrderValidate();
+        $param=$ov->goCheck();
+        $order=new OrderService($param["token"]);
+        $data=$order->create();
+        return $this->succeed($data);
     }
 
 

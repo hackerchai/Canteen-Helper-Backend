@@ -1,4 +1,4 @@
-<?php
+-<?php
 namespace app\student\controller;
 use app\student\model\Cart as Carts;
 class Cart extends BaseController{
