@@ -55,15 +55,5 @@ class Member extends BaseController
             "msg" =>$value['uid'],
         ]);
     }
-
-    public function smsCode()
-    {
-        $pv=new PhoneValidate();
-        $param=$pv->goCheck();
-        $sms=new Sms();
-        $res=$sms->sendSms($param["phone"]);
-        return $this->succeed($res);
-
-    }
 }
 
