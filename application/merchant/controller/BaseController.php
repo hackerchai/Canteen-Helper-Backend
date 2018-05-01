@@ -9,7 +9,8 @@ class BaseController extends Controller{
         $se=new Success();
         return $se->create($data);
     }
-    protected function getToken(){
+    protected function getToken()
+    {
         $tn=new Token();
         $param=$tn->goCheck();
         $token=$param['token'];
