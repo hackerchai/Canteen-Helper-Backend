@@ -2,10 +2,12 @@
 namespace app\merchant\model;
 class Order extends BaseModel
 {
+    protected $createTime=false;
     public function getTodayOrder($merchant_id)
     {
         $time = date("Y-m-d",time());
-        $orders = $this->with(["buyer"])->where("create_time","LIKE",$time)->where("merchant_id","=",$merchant_id)->select();
+        echo($time);
+        $orders = $this->with(["buyer"])->where("create_time","LIKE","%$time%")->where("merchant_id","=","$merchant_id")->select();
         $data=[];
         if(!empty($orders))
         {

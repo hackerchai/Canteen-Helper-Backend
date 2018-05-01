@@ -41,21 +41,22 @@ class OrderMerchant{
     private function makeData($sources)
     {
         $datas=[];
+        $datas["order"]=[];
         foreach ($sources as $source)
         {
             $data=[];
+
             $goods=$this->strToArray($source['goods'],",");
             $nums=$this->strToArray($source['nums'],",");
             $menus=(new Menu())->findMenus($goods,$nums,"id,meal_name,meal_price,picture");
-            $data["order"]=$source['student']['name'];
+            $data["name"]=$source['buyer']['name'];
             $data['order_num']=$source["order_num"];
             $data["price"]=$source["money"];
             $data['status']=$source['status'];
             $data["goods"]=$menus;
-            $data["price"]=$source["money"];
             $data['create_time']=$source["create_time"];
             $data['order_type']=$source['order_type'];
-            array_push($datas,$data);
+            array_push($datas["order"],$data);
         }
         $today_sum=$this->calculateSumMoney($sources);
         $datas["today_sum"]=$today_sum;

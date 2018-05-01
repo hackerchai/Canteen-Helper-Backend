@@ -125,7 +125,6 @@ class Order{
             $nums=$d["nums"];
             if(strpos($goods,",")){
                 $goods=explode(",",$goods);
-               // var_dump($goods);
                 $nums=explode(",",$nums);
                 foreach($goods as $key =>$good){
                     if(array_key_exists($good,$data)){
