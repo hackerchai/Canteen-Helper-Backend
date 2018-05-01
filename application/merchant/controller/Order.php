@@ -3,6 +3,7 @@ namespace app\merchant\controller;
 use app\lib\validate\MerchantIdValidate;
 use app\merchant\model\Order as OrderModel;
 use app\service\Order as OrderService;
+use app\service\OrderMerchant as OrderMerchantService;
 use app\lib\exception\SpoceException;
 class Order extends BaseController
 {
@@ -11,8 +12,8 @@ class Order extends BaseController
     {
         $ov=new MerchantIdValidate();
         $param=$ov->goCheck();
-        $order=new OrderService($param["token"]);
-        $data=$order->create();
+        $sorder=new OrderMerchantService($param["token"]);
+        $data=$sorder->get();
         return $this->succeed($data);
     }
 

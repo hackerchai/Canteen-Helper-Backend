@@ -57,7 +57,7 @@ class OrderMerchant{
             $data['order_type']=$source['order_type'];
             array_push($datas,$data);
         }
-        $today_sum=$this->calculateSumMoney();
+        $today_sum=$this->calculateSumMoney($sources);
         $datas["today_sum"]=$today_sum;
 
         return $datas;
