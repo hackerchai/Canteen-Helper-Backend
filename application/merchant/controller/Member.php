@@ -28,14 +28,20 @@ class Member extends BaseController
         $lv = new CodeValidate();
         $param = $lv->goCheck();
         $code = $param['code'];
-        $mt = new Toke($code,"merchant_member","wx_canteen_helper");
+        $mt = new Toke($code,"merchant_member","wx_canteen_admin");
         $success = new Success();
         $token = $mt->get();
         return $success->create([
             "token" => $token,
         ]);
     }
-
+    public function smsCode(){
+        $pv=new PhoneValidate();
+        $param=$pv->goCheck();
+        $sms=new Sms();
+        $res=$sms->sendSms($param["phone"]);
+        return $this->succeed($res);
+    }
     public function auth()
     {
         $rv=new RegisterValidate();

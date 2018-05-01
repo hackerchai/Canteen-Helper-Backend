@@ -10,6 +10,18 @@ class Order extends BaseModel{
             return false;
         }
     }
+    public function findTodayOrder($merchant_id){
+        $today=date("Y-m-d",time());
+        $orders=$this->where("create_time","like","%$today%")->where("merchant_id",$merchant_id)->select();
+        $data=[];
+        if(!empty($orders)){
+            foreach($orders as $order){
+                $order=$order->getData();
+                array_push($data,$order);
+            }
+        }
+        return $data;
+    }
     public function findOrderByOrderNum($orderNum,$method=[]){
         $order=$this->with($method)->where("order_num","=",$orderNum)->find();
         if(!empty($order)){

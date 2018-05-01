@@ -58,7 +58,6 @@ class User extends BaseController{
         $sms=new Sms();
         $res=$sms->sendSms($param["phone"]);
         return $this->succeed($res);
-
     }
     public function addressList(){
         $id=$this->getId();

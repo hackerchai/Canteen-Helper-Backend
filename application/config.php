@@ -260,7 +260,7 @@ return [
     //token加密盐
     'token_salt' =>'dssfgdretgg',
     //token有效时间
-    'token_expire_in' => 0,
+    'token_expire_in' => 3600,
     "address" =>[
         "garden" => [1 => "梅园" ,2 => "竹园", 3 =>"松园", 4 => "兰园"],
         "building" => [1 => "一栋",2 => "二栋", 3 => "三栋", 4 => "四栋",

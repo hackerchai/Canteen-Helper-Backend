@@ -7,6 +7,7 @@ class Menu extends BaseModel{
 
   public function findMenus($goods,$nums,$field=""){
         $menus=[];
+        $mercahnt_id=0;
         if(is_array($goods))
         {
         for($i=0;$i<sizeof($goods);$i++){
@@ -20,21 +21,28 @@ class Menu extends BaseModel{
             $menu=$this->where("id","=",$good)->field($field)->find()->toArray();
            }
             if($menu){
+                $mercahnt_id=$menu['merchant_id'];
                 $this->addSale($good);
                 $menu["nums"]=$nums[$i];
                 array_push($menus,$menu);
             }
         }
         }else{
+           
             $menu=$this->where("id","=",$goods)->field($field)->find()->toArray();
+
             if($menu){
+                $mercahnt_id=$menu['merchant_id'];
                 $this->addSale($goods);
                 $menu["nums"]=$nums;
                 $menus=[$menu];
             }
             
         }
-        return $menus;
+        $data=[];
+        array_push($data,$menus);
+        array_push($data,$mercahnt_id);
+        return $data;
     }
     public  function getMenuById($id){
         $menu=Menu::get($id);
