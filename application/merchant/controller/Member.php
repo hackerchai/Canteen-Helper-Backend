@@ -42,18 +42,20 @@ class Member extends BaseController
         $res=$sms->sendSms($param["phone"]);
         return $this->succeed($res);
     }
+    public function check(){
+        $this->getToken();
+        return $this->succeed([
+            "msg" =>true
+        ]);
+    }
     public function auth()
     {
-        $rv=new RegisterValidate();
-        $params=$rv->goCheck();
-        $value=$this->getValue($params['token']);
-        $openId=$value['openid'];
-        $merchant=MerchantMember::where("open_id","=",$openId);
-        $data["phone"]=$params['phone'];
-        $merchant->update($data);
-        return $this->succeed([
-            "msg" =>$value['uid'],
-        ]);
+        $re=new RegisterValidate();
+        $uid=$this->getId();
+        $param=$re->goCheck();
+        $phone=$param['phone'];
+        MerchantMember::where("id",$uid)->update(['phone' => $phone]);
+        return $this->succeed(["msg" => $uid]);
     }
 
 

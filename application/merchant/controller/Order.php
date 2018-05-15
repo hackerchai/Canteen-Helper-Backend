@@ -26,8 +26,8 @@ class Order extends BaseController{
         $ordersc=new OrderModel();
         $orders=$ordersc->findTodayOrder($uid);
         $order=new OrderService($token);
-       $res= $order->analysisOrder($orders);
-        return $res;
+        $res= $order->analysisOrder($orders);
+        return $this->succeed($res);
     }
    
 }

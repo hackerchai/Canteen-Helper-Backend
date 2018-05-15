@@ -5,6 +5,7 @@ use app\student\model\Order as OrderModel;
 use app\student\model\Menu;
 use app\lib\exception\OrderException;
 use app\lib\qrcode\Qcode;
+use app\lib\exception\MenuNotExist;
 class Order{
     protected $goods;
     protected $nums;
@@ -71,9 +72,7 @@ class Order{
             ]);
         }
     }
-    public function getOrderSum(){
-        
-    }
+
     /**
      * 创建订单二维码
      * @param string $text 字符串
@@ -111,11 +110,48 @@ class Order{
     public function analysisOrder($orders){
         $res=$this->analysisOrderByType($orders);
         $data=[];
-       
         foreach($res as $key =>$v){
             $data[$key]=$this->analysisOrderByGoods($res[$key]);
         }
+        $data=$this->changeIdOnRes($data);
+       $data=$this->getMenuByIds($data);
         return $data;
+    }
+
+    public function changeIdOnRes($datas){
+        $data=[];
+        foreach($datas as $ty => $pi){
+            foreach($pi as $k =>$v){
+                if(array_key_exists($k,$data)){
+                    if(!array_key_exists($ty,$data[$k])){
+                        $data[$k][$ty]=0;
+                    }
+                    $data[$k][$ty]+=$v;
+                }else{
+                    $data[$k]=[];
+                    $data[$k][$ty]=$v;
+                  
+                }
+            }
+        }
+        return $data;
+    }
+    
+    public function getMenuByIds($data){
+       
+        foreach($data as $k => $v){
+            $mune=Menu::where("id",$k)->find();
+            if(!empty($mune)){
+                $data[$k]["menu"]=$mune->toArray();
+            }else{
+                throw new MenuNotExist(["msg" => "菜单已经被删除,无法查看今日订单"]);
+            }
+           
+           
+        }
+      
+        return $data;
+
     }
     private function analysisOrderByGoods($datas){
         $data=[];
