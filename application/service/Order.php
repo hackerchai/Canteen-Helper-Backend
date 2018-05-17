@@ -45,6 +45,25 @@ class Order{
         $data['nums']=$this->nums;
         $data['create_time']= date("Y-m-d h:i:s",time());
         $data['qrcode']=$this->createQRcodeByText($data['order_num']);
+        //分配配送员
+        if($this->orderType == 2){
+            $weekDay = date("w",time()) == 0 ? 7 : date("w",time());
+            $hourNow = date("G",time());
+            $mealTime = $hourNow<=10 ? "1" :($hourNow>=15 ? "3" :"2");
+            $adressInfo = Db::name("adress")->where("id",$data['address'])->find();
+            $timeTable = Db::name("timetable")
+            ->where("week_day",$weekDay)
+            ->where("meal_time",$mealTime)
+            ->where("garden",$adressInfo["garden"])
+            ->where("building",$adressInfo["building"])
+            ->find();
+            if(empty($timeTable)){
+                throw new OrderException([
+                    "msg" => "没有合适的配送员",
+                ]);
+            }
+            $data['deiever_id'] = $timeTable["uid"];
+        }
         $order=OrderModel::create($data);
         $orderId=$order->id;
         $this->updateOrderMoney($orderId);
