@@ -20,7 +20,7 @@ class Qcode{
         $qrcode=new QrCode();
         $qrcode->setText($text);
         $qrcode->setSize(300);
-       // $qrcode->setLogoPath($logoPath);
+        //$qrcode->setLogoPath($logoPath);
         $qrcode->setLogoWidth(100);
         $pngData=$qrcode->writeString();
         $filename=$fileRoot.self::$name.".png";
@@ -33,11 +33,11 @@ class Qcode{
      * 得到生成二维码的名字
      */
     public static function getName(){
-           return self::$name;
+           return self::$name.".png";
     }
     //得到二维码的相对路径
     public static function getRelativeName(){
-        return Date::getTime().DS.self::$name;
+        return Date::getTime().DS.self::$name.".png";
     }
 }
     

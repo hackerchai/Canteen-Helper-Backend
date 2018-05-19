@@ -6,6 +6,6 @@ namespace app\lib\exception;
  */
 class OrderException extends BaseException
 {
-    public $msg = 'token无效或者已经过期';
-    public $errorCode = 405;
+    public $msg = '已经提取了这个订单';
+    public $errorCode = 801;
 }

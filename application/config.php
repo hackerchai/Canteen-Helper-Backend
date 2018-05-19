@@ -243,16 +243,16 @@ return [
     ],
     //微信配置
     'wx_canteen_helper' => [
-        'appId' =>'wxe45caf54f3997402',
-        'appSecret' =>"7a3d1e0b4da2f976f4c6880fe9cfe572",
+        'appId' =>'wx7941bf9d67b0b5b0',
+        'appSecret' =>"dbdba7ba4eee1a55f2673f02c484749f",
         'loginUrl' => "https://api.weixin.qq.com/sns/".
         "jscode2session?appid=%s&secret=%s&js_code=%s".
         "&grant_type=authorization_code"
     
     ],
     "wx_canteen_admin" =>[
-        'appId' =>'wx1b7f5cd400712300',
-        'appSecret' =>"bcf0f58b91897fe16e1fa156a8cffaaf",
+        'appId' =>'wxdc3947d206eed1c0',
+        'appSecret' =>"120080d4a68824bd9fd8040295f3ac13",
         'loginUrl' => "https://api.weixin.qq.com/sns/".
         "jscode2session?appid=%s&secret=%s&js_code=%s".
         "&grant_type=authorization_code"
@@ -266,5 +266,4 @@ return [
         "building" => [1 => "一栋",2 => "二栋", 3 => "三栋", 4 => "四栋",
          5 => "五栋", 6 => "六栋", 7 => "七栋", 8 => "八栋",  9 => "九栋"]
     ],
-    "host" =>"http://localhost/Canteen-Helper-Backend/static/uploads/"
 ];

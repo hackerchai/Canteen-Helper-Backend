@@ -6,6 +6,7 @@ use app\lib\validate\MenuValidate;
 use app\student\model\Menu;
 use app\service\Order;
 class Bussiness extends BaseController{
+
     public function list(){
         $tn=new Token();
         $param=$tn->goCheck();
@@ -41,9 +42,13 @@ class Bussiness extends BaseController{
     public function orderList(){
         $token=$this->getToken();
         $id=$this->getId();
+        $state=input("param.status");
         $order=new Order($token);
-       $res= $order->makeOrderByBuyId($id);
+       $res= $order->makeOrderByBuyId($id,$state);
        return $this->succeed($res);
+    }
+    public function orderListByState(){
+
     }
 
 }

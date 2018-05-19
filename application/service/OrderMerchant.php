@@ -15,10 +15,10 @@ class OrderMerchant{
         $this->token=$token;
     }
 
-    public function get()
+    public function get($merchant_id)
     {
-        $merchant_id=$this->getIdByToken($this->token);
         $order=(new OrderModel())->getTodayOrder($merchant_id);
+
         $data=$this->makeData($order);
         return $data;
     }
@@ -45,7 +45,6 @@ class OrderMerchant{
         foreach ($sources as $source)
         {
             $data=[];
-
             $goods=$this->strToArray($source['goods'],",");
             $nums=$this->strToArray($source['nums'],",");
             $menus=(new Menu())->findMenus($goods,$nums,"id,meal_name,meal_price,picture");

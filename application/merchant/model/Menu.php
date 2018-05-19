@@ -20,14 +20,16 @@ class Menu extends BaseModel{
             $menu=$this->where("id","=",$good)->field($field)->find()->toArray();
            }
             if($menu){
+
                 $this->addSale($good);
                 $menu["nums"]=$nums[$i];
                 array_push($menus,$menu);
             }
         }
         }else{
-            $menu=$this->where("id","=",$goods)->field($field)->find()->toArray();
+            $menu=$this->where("id","=",$goods)->field($field)->find();
             if($menu){
+                $menu=$menu->toArray();
                 $this->addSale($goods);
                 $menu["nums"]=$nums;
                 $menus=[$menu];

@@ -4,6 +4,7 @@ use app\lib\exception\WeChatException;
 use Exception;
 use app\student\model\User;
 use app\lib\exception\TokenException;
+use think\Cache;
 use think\Db;
 class Token{
     protected $code;
@@ -27,9 +28,10 @@ class Token{
         $this->loginUrl=sprintf($wx['loginUrl'],$this->appId,$this->secert,$this->code);
     }
     
-    public static function getVarByToken($key){
-
-
+    public static function getVarByToken($token,$key){
+            $value=Cache::get($token);
+            $value=json_decode($value,true);
+           return $value[$key];
     }
     /**
      * 生成令牌

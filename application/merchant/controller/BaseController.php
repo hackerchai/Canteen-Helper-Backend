@@ -1,5 +1,6 @@
 <?php
 namespace app\merchant\controller;
+use app\merchant\model\MerchantMember;
 use think\Controller;
 use app\lib\validate\Token;
 use think\Cache;
@@ -17,10 +18,8 @@ class BaseController extends Controller{
         return $token;
     }
     protected function getId(){
-        $token=$this->getToken();
-        $v=Cache::get($token);
-        $v=json_decode($v,true);
-        $id=$v['uid'];
-        return $id;
+        $id=\app\service\Token::getVarByToken($this->getToken(),"uid");
+        $merchant_id=MerchantMember::get($id)->toArray()["merchant_id"];
+        return $merchant_id;
     }
 }

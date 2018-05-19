@@ -1,5 +1,7 @@
 <?php
 namespace app\student\model;
+use app\lib\exception\MenuNotExist;
+
 class Menu extends BaseModel{
     public function merchant(){
         return $this->hasOne("merchant","id","merchan_id")->field("merchant_id,id");
@@ -7,12 +9,11 @@ class Menu extends BaseModel{
 
   public function findMenus($goods,$nums,$field=""){
         $menus=[];
-        $mercahnt_id=0;
         if(is_array($goods))
         {
         for($i=0;$i<sizeof($goods);$i++){
-            //$menu=new Menu();
-           // $menu=$menu->where("id","=",$good)->find();
+//            $menu=new Menu();
+//            $menu=$menu->where("id","=",$good)->find();
            $good=$goods[$i];
            if(empty($field))
            {
@@ -21,28 +22,23 @@ class Menu extends BaseModel{
             $menu=$this->where("id","=",$good)->field($field)->find()->toArray();
            }
             if($menu){
-                $mercahnt_id=$menu['merchant_id'];
                 $this->addSale($good);
                 $menu["nums"]=$nums[$i];
                 array_push($menus,$menu);
             }
         }
-        }else{
-           
-            $menu=$this->where("id","=",$goods)->field($field)->find()->toArray();
-
-            if($menu){
-                $mercahnt_id=$menu['merchant_id'];
+        }else {
+            $menu = $this->where("id", "=", $goods)->field($field)->find();
+            if ($menu) {
+                $menu=$menu->toArray();
                 $this->addSale($goods);
-                $menu["nums"]=$nums;
-                $menus=[$menu];
+                $menu["nums"] = $nums;
+                $menus = [$menu];
+            }else{
+                throw  new MenuNotExist();
             }
-            
         }
-        $data=[];
-        array_push($data,$menus);
-        array_push($data,$mercahnt_id);
-        return $data;
+        return $menus;
     }
     public  function getMenuById($id){
         $menu=Menu::get($id);

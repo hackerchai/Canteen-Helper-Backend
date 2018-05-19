@@ -23,29 +23,38 @@ class Order extends BaseController{
         return $this->succeed($data);
     }
     public function makeOrder(){
+
+//        $token=$this->getToken();
+//        $flag=input('param.flag');
+//        $order=new OrderService($token);
+
+
+
         $id=$this->getId();
+        $param=input("param.");
+        $cart=new CartService();
+        $products=$cart->createData($param);
         $token=$this->getToken();
-        $flag=input('param.flag');
         $order=new OrderService($token);
         $address="";
+        $flag=$param["is_post"];
         $param=[];
-        if($flag){
+        if($flag==2){
             $param['order_type']=2;
-            $address=Address::where("uid",$id)->where("choose",1)->find()->toArray();
+            $address=Address::where("uid",$id)->where("choose",1)->find()->getData();
             $address=$address["garden"].$address['building'].$address['room'];
             $param['address']=$address;
         }else{
-            $param['order_type']=1; 
+            $param['order_type']=$flag;
         }
-        $cart=new CartService();
-        $products=$cart->createGoods($id); 
+
         foreach($products as $product){
             $param['goods']=$product['goods'];
             $param['nums']=$product['nums'];
+            $param['merchant_id']=$product['merchant_id'];
             $order->create($param);
-            Cart::where("id",$product['cartId'])->update(['status'=>1]);
         }
-        return $this->succeed(["msg" =>true]);
+        return $this->succeed(["msg" => true]);
         
     }
     

@@ -58,6 +58,7 @@ class User extends BaseController{
         $sms=new Sms();
         $res=$sms->sendSms($param["phone"]);
         return $this->succeed($res);
+
     }
     public function addressList(){
         $id=$this->getId();
@@ -70,6 +71,10 @@ class User extends BaseController{
         $param =$addr->goCheck();
         $param["uid"]=$uid;
         if(empty($param['id'])){
+            $adr=Address::where("uid",$uid)->find();
+            if(empty($adr)){
+                $param["choose"]=1;
+            }
             $addr=new Address($param);
             $addr->allowField(true)->save();
         }else{
@@ -103,11 +108,13 @@ class User extends BaseController{
             $cartId=$mune->id;
             Cart::where("id",$cartId)->update(["nums" => $num]);
         }else{
-            Cart::create([
+           $data= [
                 "buyId" =>$id,
                 "menuId" =>$menuId,
                 "nums" => 1,
-            ]);
+            ];
+            $cart=new Cart($data);
+          	$cart->save();
          }
          return $this->succeed([
              "msg" =>true
@@ -161,6 +168,22 @@ class User extends BaseController{
             throw new DefualtAddress();
         
         }
+    }
+    public function deleteAddress(){
+        $this->getToken();
+        $id=input("param.id");
+        $address=Address::where("id",$id)->find();
+        if(!empty($address)){
+            $address=$address->getData();
+            if($address["choose"]==1){
+                throw new DefualtAddress(["msg" =>"不能删除默认地址"]);
+            }else{
+                Address::destroy($id);
+            }
+        }else{
+            throw new DefualtAddress();
+        }
+        return $this->succeed(["msg"=>true]);
     }
     public function updateDefualAddress(){
         $uid=$this->getId();

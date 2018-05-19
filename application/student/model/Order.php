@@ -10,10 +10,8 @@ class Order extends BaseModel{
             return false;
         }
     }
-    public function findTodayOrder($merchant_id){
-        //$today=date("Y-m-d",time());
-        $today="2018-04-30";
-        $orders=$this->where("create_time","like","%$today%")->where("merchant_id",$merchant_id)->select();
+    public function findTodayOrderData($method=[],$merchant_id=null){
+       $orders=$this->toSelect($method,$merchant_id);
         $data=[];
         if(!empty($orders)){
             foreach($orders as $order){
@@ -23,6 +21,28 @@ class Order extends BaseModel{
         }
         return $data;
     }
+    public function findTodayOrderRelativeData($orderType,$method=[]){
+        $today=date("Y-m-d",time());
+        $orders=$this->with($method)->where("create_time","like","%$today%")->where("order_type",$orderType)->select();
+        $data=[];
+        if(!empty($orders)){
+            foreach($orders as $order){
+                $order=$order->toArray();
+                array_push($data,$order);
+            }
+        }
+        return $data;
+    }
+
+    private  function toSelect($method=[],$merchant_id=null){
+        $today=date("Y-m-d",time());
+        if(!empty($merchant_id)){
+            $orders=$this->with($method)->where("create_time","like","%$today%")->where("merchant_id",$merchant_id)->select();
+        }else{
+            $orders=$this->with($method)->where("create_time","like","%$today%")->select();
+        }
+        return $orders;
+    }
     public function findOrderByOrderNum($orderNum,$method=[]){
         $order=$this->with($method)->where("order_num","=",$orderNum)->find();
         if(!empty($order)){
@@ -31,29 +51,34 @@ class Order extends BaseModel{
             return false;
         }
     }
-    public function findOrderByBuyId($buyId,$method=[]){
-        $orders=$this->with($method)->where("buyer_id","=",$buyId)->select();
+    public function findOrderByBuyId($buyId,$state,$method=[]){
+
+        if(!isset($state)){
+            $orders=$this->with($method)->where("buyer_id","=",$buyId)->select();
+        }else {
+            $orders = $this->with($method)->where("buyer_id", $buyId)->where("status", $state)->select();
+        }
         $data=[];
         if(!empty($orders)){
             foreach($orders as $order){
-               
             array_push($data,$order->toArray());
             }
         }
-       
         return $data;
     }
     public function student(){
         return $this->hasOne("Student","id","buyer_id")->field("id,name");
     }
+    public function merchant(){
+        return $this->hasOne("Merchant","id","merchant_id")->field("id,merchant_name,merchant_loc,phone");
+    }
     public function getStatusAttr($value){
         $status=[
-            0 =>"已创建",
-            1=>"已提交",
-            2=>"已拒绝",
-            3 =>"已付款",
-            4 => "已接单",
-            5 =>"已完成",
+            0 =>"等待支付结果",
+            1=>"待取餐",
+            2=>"已拒单",
+            3=>"待支付",
+            4 =>"已取餐",
         ];
         return $status[$value];
     }

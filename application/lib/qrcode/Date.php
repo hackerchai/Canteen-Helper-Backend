@@ -7,7 +7,8 @@ class Date{
         $fileDir=$root.self::$time;
         $fileDir = iconv("UTF-8", "GBK", $fileDir);
         if(!file_exists($fileDir)){
-            mkdir($fileDir,"0777",true);
+            mkdir($fileDir,0777,true);
+            chmod($fileDir, 0777);
         }
         return $fileDir.DS;
     }

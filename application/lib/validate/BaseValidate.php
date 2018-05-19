@@ -124,4 +124,13 @@ class BaseValidate extends Validate
             return $field.'不能为空';
         }
     }
+    protected function isFrequent($value,$rule='',$data='',$field=''){
+        $code=cache($value);
+        if(empty($code)){
+            return true;
+        }else{
+            return "验证码已经发送,请等待5分钟后再重新发送";
+        }
+
+    }
 }
