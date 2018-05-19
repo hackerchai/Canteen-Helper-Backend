@@ -6,7 +6,7 @@
  * Time: 下午11:40
  **/
 namespace app\merchant\controller;
-use app\merchant\model\BaseModel;
+use app\business\model\BaseModel;
 use app\lib\validate\CodeValidate;
 use app\merchant\controller\BaseController;
 use app\lib\validate\LoginValidate;
@@ -42,18 +42,24 @@ class Member extends BaseController
         $res=$sms->sendSms($param["phone"]);
         return $this->succeed($res);
     }
-    public function auth()
-    {
-        $rv=new RegisterValidate();
-        $params=$rv->goCheck();
-        $value=$this->getValue($params['token']);
-        $openId=$value['openid'];
-        $merchant=MerchantMember::where("open_id","=",$openId);
-        $data["phone"]=$params['phone'];
-        $merchant->update($data);
+    public function check(){
+        $this->getToken();
         return $this->succeed([
-            "msg" =>$value['uid'],
+            "msg" =>true
         ]);
     }
+    public function auth()
+    {
+        $re=new RegisterValidate();
+        $uid=$this->getId();
+        $param=$re->goCheck();
+        $phone=$param['phone'];
+        MerchantMember::where("id",$uid)->update(['phone' => $phone]);
+        return $this->succeed(["msg" => $uid]);
+    }
+
+
+
+
 }
 

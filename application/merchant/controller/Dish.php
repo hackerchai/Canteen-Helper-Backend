@@ -17,15 +17,26 @@ class Dish extends BaseController{
     public function switchSoldOut(){
         $this->getToken();
         $id=input("param.id");
+        $flag=input("param.flag");
         $menu=Menu::where("id",$id)->find();
         if(!empty($menu)){
-            if($menu->is_sold_out==1){
-                Menu::where("id",$id)->update(["is_sold_out"=>0]);
-                return $this->succeed(["stutas" => 0]);
-            } else {
-                Menu::where("id",$id)->update(["is_sold_out"=>1]);
-                return $this->succeed(['stutas' =>1]);
+            if($flag){
+                if($menu->is_sold_out==0){
+                    Menu::where("id",$id)->update(["is_sold_out"=>1]);
+                    return $this->succeed(['stutas' =>1]);
+                }else{
+                  throw new  MenuNotExist(["msg"=>"菜品已经上架"]);
+                }
+            }else{
+                if($menu->is_sold_out==1){
+                    Menu::where("id",$id)->update(["is_sold_out"=>0]);
+                    return $this->succeed(['stutas' =>0]);
+                }else{
+                  throw new  MenuNotExist(["msg" =>"菜品已经下架"]);
+                }
+
             }
+           
         }else{
             throw new MenuNotExist();
         }
@@ -52,16 +63,19 @@ class Dish extends BaseController{
     public function add(){
         $this->getToken();
         $param=input("param.");
-        $id=$param["id"];
+        
+        $id=empty($param["id"])?0:$param["id"];
         $menu=Menu::where("id",$id)->find();
         $data["meal_name"]=$param['name'];
         $data['descption']=$param['des'];
         $data['meal_price']=$param["price"];
+        $data["merchant_id"]=$this->getId();
         $file = request()->file('image');
         $info = $file->move(ROOT_PATH . 'static' . DS . 'uploads');
         if($info){
           $image=$info->getSaveName();
-          $data['picture']=$image;
+          $image=str_replace("\\","/",$image);
+          $data['picture']=config("host").$image;
         }else{
              throw new ImageException(["msg"=>$file->getError()]);
         }
@@ -70,7 +84,7 @@ class Dish extends BaseController{
         }else{
            Menu::create($data);
         }
-        return $this->succeed(['msg' =>1]);
+        return $this->succeed(['msg' =>true]);
      
         
     }

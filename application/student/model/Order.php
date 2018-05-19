@@ -11,7 +11,8 @@ class Order extends BaseModel{
         }
     }
     public function findTodayOrder($merchant_id){
-        $today=date("Y-m-d",time());
+        //$today=date("Y-m-d",time());
+        $today="2018-04-30";
         $orders=$this->where("create_time","like","%$today%")->where("merchant_id",$merchant_id)->select();
         $data=[];
         if(!empty($orders)){

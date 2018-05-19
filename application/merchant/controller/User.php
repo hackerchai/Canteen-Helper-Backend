@@ -15,6 +15,6 @@ class User extends BaseController{
         $param=$re->goCheck();
         $phone=$param['phone'];
         MerchantMember::where("id",$uid)->update(['phone' => $phone]);
-        return $this->succeed(["msg" => 1]);
+        return $this->succeed(["msg" => $uid]);
     }
 }

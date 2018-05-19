@@ -44,7 +44,7 @@ class Order extends BaseController
         $orders=$ordersc->findTodayOrder($uid);
         $order=new OrderService($token);
         $res= $order->analysisOrder($orders);
-        return $res;
+        return $this->succeed($res);
     }
-
+   
 }
