@@ -24,14 +24,14 @@ class DelieverOrder extends BaseModel{
         foreach ($timeTable as $key => $value) {
             $returnData[]=[$value["garden"],$value["building"]];
         }
-        return $returnData[];
+        return $returnData;
     }
 
     public function list($token){
         $avaliable = $this->getSchedule();
         $poentientalOrder = Db::name("order")->where("status",4)
         ->where("order_type",2)
-        ->where("order_type",2)
+        ->where("order_type",2);
         
         return $this->user;
     }
