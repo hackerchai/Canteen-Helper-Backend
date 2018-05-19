@@ -1,0 +1,99 @@
+   <!DOCTYPE html>
+   <html>
+   
+   {include file="public/head"}
+   
+   <body class="skin-blue" style="height:100%"> <section class="content-header">
+        <section class="content-header">
+                <h1>用户管理
+                   
+                    <small>管理员</small>
+                </h1>
+            </section>
+            </section>
+
+            <!-- Main content -->
+            <section class="content">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <div class="box-tools">
+                                    <div class="input-group">
+                                        <button class="btn btn-success" id="add_admin" onclick="buttonform()">
+                                            <i class="fa fa-plus"></i>
+                                            添加管理员
+                                        </button>
+                                        <input type="text" name="table_search" class="form-control input-sm pull-right" style="width: 150px;" placeholder="搜索" />
+                                        <div class="input-group-btn" style="vertical-align: top !important;">
+                                            <button class="btn btn-sm btn-default" onclick='sourch("__ROOT__/index.php/admin/User/sourchAdmin")'>
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- /.box-header -->
+                            <div class="box-body table-responsive no-padding">
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>用户名</th>
+                                        <th>邮箱</th>
+                                        <th>权限</th>
+                                        <th>操作</th>
+                                    </tr>
+                                    {volist name="admins" id="admin"}
+                                    <tr>
+                                        <td>{$admin['id']}</td>
+                                        <td>{$admin['username']}</td>
+                                        
+                                        <td>121699842@qq.com</td>
+                                        <td>超级管理员</td>
+                                   
+                                        <td><a>查看</a>
+                                            <a>修改</a>
+                                            <a>删除</a></td>
+                                    </tr>
+
+                                {/volist}
+                                </table>
+                                <div style="float :right">
+                                        {$show}
+                                </div>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                        <!-- /.box -->
+                    </div>
+                </div>
+            </section>
+            <!-- /.content -->
+        </aside>
+        <!-- /.right-side -->
+    </div>
+    <div class="dia_form" hidden>
+        <table class="table table-hover">
+            <tr>
+                <th>ID</th>
+                <th>头像</th>
+                <th>用户名</th>
+                <th>注册邮箱</th>
+                <th>注册时间</th>
+                <th>操作</th>
+            </tr>
+            <tr>
+                <td>user-info</td>
+                <td>user-info</td>
+                <td>user-info</td>
+                <td>user-info</td>
+                <td>user-info</td>
+                <td>user-info</td>
+            </tr>
+        </table>
+    </div>
+    {include file="public/script"}
+</body>
+
+</html>
+    

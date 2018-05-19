@@ -1,0 +1,7 @@
+.idea/
+.well-known/
+.htaccess
+404.html
+vendor/
+composer.lock
+static/

@@ -1,0 +1,161 @@
+<script>
+        $(document).ready(function (){
+           var li=$("#navbar").children("li");
+           console.log(li);
+           var flag=false;
+           for(var i=0;i<li.length;i++)
+           {
+               var ul=li[i].children;
+               for(var j=0;j<ul.length;j++)
+               {
+                   
+                   if(ul[j].localName==="ul")
+                   {
+                       console.log('hoolee');
+                       li[i].className = "treeview";
+                      flag=true;
+                   }
+               }
+            
+               var url=window.location.pathname;
+               url = url.replace(new RegExp('/','g'), "");
+               console.log(url);
+
+               if (url.indexOf(li[i].id)!=-1) {
+                   if(flag)
+                   {
+                      $(li[i].id).css('active');
+                   }
+                   else{
+                       li[i].firstChild.className = "active";
+                   }
+              
+
+              } else {
+             li[i].firstChild.className = "";
+                 }
+           }
+           console.log(li);
+       });
+   </script>
+<!-- 左侧导航 -->
+      <aside class="left-side sidebar-offcanvas">
+            <!-- sidebar: style can be found in sidebar.less -->
+            <section class="sidebar">
+                <!-- Sidebar user panel -->
+                <div class="user-panel">
+                    <div class="pull-left image">
+                        <img src="__ROOT__/public/admin/img/avatar3.png" class="img-circle" alt="User Image" />
+                    </div>
+                    <div class="pull-left info">
+                        <p>Hello, Jane</p>
+                        <a href="#">
+                            <i class="fa fa-circle text-success"></i>
+                            Online
+                        </a>
+                    </div>
+                </div>
+                <!-- sidebar menu: : style can be found in sidebar.less -->
+                <ul class="sidebar-menu" id="navbar">
+                    <li class="" id='adminindex'>
+                        <a href="__ROOT__/index.php/admin/index/login">
+                            <i class="fa fa-dashboard"></i>
+                            <span>首页</span>
+                        </a>
+                    </li>
+                    <li class="treeview" id='userindex'>
+                        <a href="javascript:void">
+                            <i class="fa fa-user"></i>
+                            <span>我的信息</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li >
+                                    <a href="javascript:void" onclick='startPage("__ROOT__/index.php/admin/admin/index")'>
+                                    <i class="fa fa-angle-double-right"></i>
+                                    基本信息
+                                </a>
+                            </li>
+                            <li id="index">
+                                <a href="javascript:void" onclick='startPage("__ROOT__/index.php/admin/admin/update")'>
+                                    <i class="fa fa-angle-double-right"></i>
+                                   修改信息
+                                </a>
+                            </li>
+                           
+                        </ul>
+                    </li>
+                    <li class="treeview" id='userindex'>
+                        <a href="javascript:void">
+                            <i class="fa fa-user"></i>
+                            <span>用户管理</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li >
+                                    <a href="javascript:void" onclick='startPage("__ROOT__/index.php/admin/user/role")'>
+                                    <i class="fa fa-angle-double-right"></i>
+                                    管理员
+                                </a>
+                            </li>
+                            <li id="index">
+                                <a href="javascript:void" onclick='startPage("__ROOT__/index.php/admin/user/index")'>
+                                    <i class="fa fa-angle-double-right"></i>
+                                    普通用户
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview" id='userindex'>
+                        <a href="javascript:void">
+                            <i class="fa fa-user"></i>
+                            <span>店铺管理</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li >
+                                    <a href="javascript:void" onclick='startPage("__ROOT__/index.php/admin/business/index")'>
+                                    <i class="fa fa-angle-double-right"></i>
+                                   全部店铺
+                                </a>
+                            </li>
+                            <li id="index">
+                                <a href="javascript:void" onclick='startPage("__ROOT__/index.php/admin/business/company")'>
+                                    <i class="fa fa-angle-double-right"></i>
+                                 店铺入驻
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="treeview" id='userindex'>
+                        <a href="javascript:void">
+                            <i class="fa fa-user"></i>
+                            <span>订单管理</span>
+                            <i class="fa fa-angle-left pull-right"></i>
+                        </a>
+                        <ul class="treeview-menu">
+                            <li >
+                                    <a href="javascript:void" onclick='startPage("__ROOT__/index.php/admin/order/index")'>
+                                    <i class="fa fa-angle-double-right"></i>
+                                   全部订单
+                                </a>
+                            </li>
+                            <li id="index">
+                                <a href="javascript:void" onclick='startPage("__ROOT__/index.php/admin/order/sum")'>
+                                    <i class="fa fa-angle-double-right"></i>
+                                 本月流水
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="__ROOT__/index.php/admin/index/">
+                            <i class="fa fa-sign-out"></i>
+                            <span>退出</span>
+                        </a>
+                    </li>
+                </ul>
+            </section>
+            <!-- /.sidebar -->
+        </aside>
+        

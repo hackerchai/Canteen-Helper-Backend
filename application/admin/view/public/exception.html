@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>Error</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Loading Bootstrap -->
+    <link href="__ROOT__/public/login/public/flatui/css/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="__ROOT__/public/login/public/main.css" rel="stylesheet">
+    <!-- Loading Flat UI -->
+    <link href="__ROOT__/public/login/public/flatui/css/flat-ui.css" rel="stylesheet">
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements. All other JS at the end of file. -->
+    <!--[if lt IE 9]>
+      <script src="__ROOT__/public/login/public/flatui/js/vendor/html5shiv.js"></script>
+      <script src="__ROOT__/public/login/public/flatui/js/vendor/respond.min.js"></script>
+    <![endif]-->
+    <style>
+        /* h1 {
+            color: #ffffff !important;
+        } */
+    </style>
+</head>
+
+<body>
+    <div class="jumbotron">
+        <div class="container">
+          <h1>{$error_code}</h1>
+            <h1>{$msg}</h1>
+            <a class="text-danger" href="javascript:history.back();">返回上一级</a>
+        </div>
+    </div>
+    <!-- /.container -->
+    <!-- jQuery (necessary for Flat UI's JavaScript plugins) -->
+    <script src="__ROOT__/public/login/public/flatui/js/vendor/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="__ROOT__/public/login/public/flatui/js/vendor/video.js"></script>
+    <script src="__ROOT__/public/login/public/flatui/js/flat-ui.min.js"></script>
+</body>
+
+</html>

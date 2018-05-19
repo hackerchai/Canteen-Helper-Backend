@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+
+{include file="public/head"}
+
+<body class="skin-blue" style="height:100%">
+            <section class="content-header">
+                <h1>首页
+                   
+                    <small>基本信息</small>
+                </h1>
+            </section>
+            <!-- Main content -->
+            <section class="content">
+                <!-- Small boxes (Stat box) -->
+                <div class="row">
+                        <div class="box">
+                                <div class="box-header">
+                                    <div class="box-tools">
+                                        <div class="input-group">
+                                            <button class="btn btn-success" id="add_admin" onclick="buttonform()">
+                                                <i class="fa fa-plus"></i>
+                                               修改信息
+                                            </button>
+                                           
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                   <table>
+                    <tr>
+                        <td>用户名：</td>
+                        <td>{$admin['user']}</td>
+                    </tr>
+                    <tr>
+                            <td>用户权限：</td>
+                            <td>{$admin['type']}</td>
+                     </tr>
+                     <tr>
+                            <td>用户email:</td>
+                            <td>{$admin['email']}</td>
+                     </tr>
+                   </table>
+                </div>
+                </div>
+                <!-- /.row -->
+            </section>
+            <!-- right col -->
+    </div>
+    <!-- /.row (main row) -->
+    </section>
+    <!-- /.content -->
+    
+    <!-- /.right-side -->
+    </div>
+    <!-- ./wrapper -->
+    <!-- jQuery 2.0.2 -->
+    {include file="public/script"}
+
+</body>
+
+</html>

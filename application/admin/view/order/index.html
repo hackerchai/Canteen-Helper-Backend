@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+   <html>
+   
+   {include file="public/head"}
+   
+   <body class="skin-blue" style="height:100%">
+   <!-- Content Header (Page header) -->
+   <section class="content-header">
+        <h1>订单管理
+           
+            <small>全部订单</small>
+        </h1>
+    </section>
+        <!-- Main content -->
+        <section class="content">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="box">
+                        <div class="box-header">
+                            <div class="box-tools">
+                                
+                                <div class="input-group">
+                                 <form id="sourch" action="__ROOT__/index.php/admin/user/sourchUser" method="POST">
+                                    <input type="text" name="table_search" class="form-control input-sm pull-right" required style="width: 150px;" placeholder="搜索"/>
+                                
+                                    <div class="input-group-btn">
+                                        <button class="btn btn-sm btn-default"  style="vertical-align: top !important;" >
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- /.box-header -->
+                        <div class="box-body table-responsive no-padding">
+                            <table class="table table-hover">
+                                <tr>
+                                    <th>订单编号</th>
+                                    <th>订购人</th>                                   
+                                    <th>订购人电话</th>
+                                    <th>送餐地址</th>
+                                    <th>订单状态</th>
+                                    <th>订购时间</th>
+                                    <th>操作</th>
+                                </tr>
+                                {volist name="orders" id="user"}
+                                <tr>
+                                  
+                                    <th>{$user['order_num']}</th>
+                                    <td>{$user['student']['name']}</td>                                  
+                                    <td>{$user['student']['phone']}</td>
+                                    <th>{$user['address']}</th>
+                                    <th>{$user['status']}</th>
+                                    <td>{$user["create_time"]}</td>
+                                    <td><a>查看</a>
+                                   
+                                    <a>删除</a></td>
+                                    
+                                </tr>
+                                {/volist}
+                               
+                            </table>
+                            <div>
+                                    {$show}
+                            </div>
+                           
+                        </div>
+                        <!-- /.box-body -->
+                    </div>
+                    <!-- /.box -->
+                </div>
+            </div>
+        </section>
+        <!-- /.content -->
+       
+        {include file="public/script"}
+       
+    </body>
+    
+    </html>
